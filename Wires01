@@ -1,0 +1,69 @@
+[{"id":"df87097a.c515b8","type":"rpi-sensehat
+in","z":"5a72bee6.056458","name":"senb827eb0e765e","motion":false,"env":true,"stick":false,"x":103.85711669921875,"y":185.71429443359375,"wires":[["9dbe49e8.e49a78"]]},{"id":"f5f79279.2fa528","type":"rpi-sensehat
+out","z":"5a72bee6.056458","name":"My
+SenseHAT","x":884.7618408203125,"y":579.2977905273438,"wires":[]},{"id":"55197d45.068e24","type":"inject","z":"5a72bee6.056458","name":"Every
+05 sec","topic":"","payload":"","payloadType":"str","repeat":"12","crontab":"","once":true,"x":129.19046020507812,"y":22.88097381591797,"wires":[["6212044d.c5f704"]]},{"id":"9dbe49e8.e49a78","type":"delay","z":"5a72bee6.056458","name":"Every
+5 seconds","pauseType":"rate","timeout":"5","timeoutUnits":"seconds","rate":"5","rateUnits":"minute","randomFirst":"1","randomLast":"5","randomUnits":"seconds","drop":true,"x":135.10708618164062,"y":275.6786193847656,"wires":[["a91e4d71.eda7b8"]]},{"id":"6212044d.c5f704","type":"exec","z":"5a72bee6.056458","command":"vcgencmd
+measure_temp","addpay":true,"append":"","useSpawn":"","timer":"","name":"Raspberry
+Pi Temperature","x":159.1904296875,"y":117.3809585571289,"wires":[["9282f03e.8f6178","415eb073.252588"],[],[]]},{"id":"f5ade69a.a9be18","type":"debug","z":"5a72bee6.056458","name":"Raspberry
+Pi TEMP","active":false,"console":"false","complete":"payload","x":853.7862548828125,"y":50.845176696777344,"wires":[]},{"id":"5a7cb8b3.80d0d8","type":"wiotp
+in","z":"5a72bee6.056458","authType":"g","deviceKey":"773d1bcd.8d9cdc","deviceType":"gateway1","deviceId":"b827eb0e765e","command":"+","commandType":"d","name":"b827eb0e765e","x":92.85711669921875,"y":762.9168090820312,"wires":[[]]},{"id":"9282f03e.8f6178","type":"function","z":"5a72bee6.056458","name":"Format
+Number ","func":"msg.payload = {'d' : {'temp' :
+parseFloat(msg.payload.substr(5,4))}};\nreturn msg;\n\n\n/*\nmsg = {\n
+ payload: JSON.stringify(\n    {\n      d:{\"temp\" : msg.payload }}\n
+ )\n};*/\n//var readT = {\"d\":{\"temp\":msg.payload}};\n//
+msg.payload = readT;\n\n//msg.payload = {'d' : {'temp' :
+parseFloat(msg.payload.substr(5,4))}};\n//return msg;\n//msg.payload
+=msg.payload.replace(\"temp=\",\"\").replace(\"'C\\n\",\"\");\n//return
+msg;","outputs":1,"noerr":0,"x":381.07147216796875,"y":33.8095703125,"wires":[["51368f50.b6eba8","f5ade69a.a9be18"]]},{"id":"1d54e0e.91f869f","type":"debug","z":"5a72bee6.056458","name":"Number
+OUT","active":true,"console":"false","complete":"payload","x":883.357177734375,"y":332.7261657714844,"wires":[]},{"id":"51368f50.b6eba8","type":"wiotp
+out","z":"5a72bee6.056458","authType":"g","qs":"false","qsDeviceId":"","deviceKey":"773d1bcd.8d9cdc","deviceType":"gateway1","deviceId":"b827eb0e765e","event":"Environment","format":"json","name":"b827eb0e765e","x":894.0478515625,"y":175.53567504882812,"wires":[]},{"id":"9db7bf61.4d75a8","type":"comment","z":"5a72bee6.056458","name":"To
+SenseHat","info":"","x":914.9999389648438,"y":107.50003051757812,"wires":[]},{"id":"a91e4d71.eda7b8","type":"function","z":"5a72bee6.056458","name":"Format
+Numbers","func":"var tempD = msg.payload.temperature;\nvar numT =
+parseFloat(tempD);     \n\nvar humiD = msg.payload.humidity;\nvar numH
+= parseFloat(humiD);     \n\nmsg.payload = {\"d\":{\"temperature\":\n
+numT,\n                    \"humidity\":\n
+numH}};\nreturn msg;\n
+","outputs":1,"noerr":0,"x":174.10711669921875,"y":346.96429443359375,"wires":[["51368f50.b6eba8","1d54e0e.91f869f"]]},{"id":"415eb073.252588","type":"function","z":"5a72bee6.056458","name":"Number
+Only","func":"var tempD = msg.payload;\nvar numT =
+parseFloat(tempD.substr(5,5));\nmsg.payload = numT;\nreturn
+msg;","outputs":1,"noerr":0,"x":574.9999738420759,"y":185.71429443359375,"wires":[["5ee4456d.2bb3ac","c381be2f.c6edb8"]]},{"id":"5ee4456d.2bb3ac","type":"debug","z":"5a72bee6.056458","name":"Number
+Only Value","active":false,"console":"false","complete":"payload","x":849.2857666015625,"y":236.42855834960938,"wires":[]},{"id":"24b4c08a.39e72","type":"debug","z":"5a72bee6.056458","name":"S
+C R E E N","active":true,"console":"true","complete":"true","x":891.6072998046875,"y":698.7501220703125,"wires":[]},{"id":"cf793c1c.bc102","type":"debug","z":"5a72bee6.056458","name":"INPUT
+DIRECT","active":true,"console":"false","complete":"payload","x":876.4285452706472,"y":777.8571515764509,"wires":[]},{"id":"8efe88f1.d0c52","type":"json","z":"5a72bee6.056458","name":"","x":302.1428527832031,"y":700.71435546875,"wires":[["cf793c1c.bc102","c381be2f.c6edb8"]]},{"id":"cec9d330.446c8","type":"function","z":"5a72bee6.056458","name":"DOTS","func":"//
+V A R S\nvar tempF;\nvar tens;\nvar digits;\nvar colorSilver
+=\"#C0C0C0\";\nvar i;\nvar ii;\nvar j;\nvar jj;\nvar lx;\nvar ly;\nvar
+x1 = \"screen\";\nvar y1  = \"off\";\nbackColor = \"#000080\";\n// C O
+L O R\nJSON.parse(msg.payload[1], x1, y1);\nif (msg.payload == y1)\n
+//  backColor = #008000;\n  b = \"#008000\";\nelse\n    // backColor =
+#800000;\n    b = \"#800000\";\n// D O T S\ntempF =
+msg.payload[0];\ntempInt = Math.floor(tempF);\ntens =
+Math.floor(tempInt/10);\ndigits = Math.floor(tempInt-tens*10);\n//
+                              ADDS BACKGROUND\n\nvar ledField = new
+Array(8);\n\nfor (i = 0; i < 6; i++) {\n  ledField[i] = new
+Array(6);\n  for (j = 5; j < 6; j++) {\n    ledField[i][j] =
+backColor;\n   \n\n  }\n}\n//                                   ADDS
+SILVER\nif (digits>6)\ndigits=6;\n for (jj = 1; jj < jj+digits; jj++)
+{\n      ledField[0][jj]= colorSilver;\n for (jj = 1; jj <
+jj+(digits-6); jj++) {\n      ledField[1][jj]= colorSilver;\n }\n
+\n }\n      \nb1 =  ledField[0][01];\nb2 =  ledField[0][02];\nb3 =
+ledField[0][03];\nb4 =  ledField[0][04];\nb5 =  ledField[0][05];\nb6 =
+ ledField[0][06];\n\nb01 =  ledField[1][01];\nb02 =
+ledField[1][02];\nb03 =  ledField[1][03];\nb04 =
+ledField[1][04];\nb05 =  ledField[1][05];\nb06 =
+ledField[1][06];\n\nb10 =  ledField[0][01];\nb20 =
+ledField[0][02];\nb30 =  ledField[0][03];\nb40 =
+ledField[0][04];\nb50 =  ledField[0][05];\nb60 =
+ledField[0][06];\n\nb11 =  ledField[1][01];\nb12 =
+ledField[1][02];\nb13 =  ledField[1][03];\nb14 =
+ledField[1][04];\nb15 =  ledField[1][05];\nb16 =
+ledField[1][06];\n\n\n//                                   ALL
+TOGETHER BKGRD + SILVER\n\ndL= [b,b,b,b,b,b,b,b,\n
+b,b11,b10,b,b,b01,b1,b,\n             b,b12,b20,b,b,b02,b2,b,\n
+     b,b13,b30,b,b,b03,b3,b,\n             b,b14,b40,b,b,b04,b4,b,\n
+          b,b15,b50,b,b,b05,b5,b,\n
+b,b16,b60,b,b06,b,b6,b,\n
+b,b,b,b,b,b,b,b];\n\nconsole.log(dL);\nmsg.payload = dL; \n\nreturn
+msg;","outputs":1,"noerr":0,"x":542.1428833007812,"y":500.7142639160156,"wires":[["f5f79279.2fa528","24b4c08a.39e72","935c3255.58d44"]]},{"id":"c381be2f.c6edb8","type":"join","z":"5a72bee6.056458","name":"","mode":"custom","build":"array","property":"payload","propertyType":"msg","key":"topic","joiner":"\\n","timeout":"","count":"2","x":376.6070861816406,"y":486.78570556640625,"wires":[["cec9d330.446c8"]]},{"id":"935c3255.58d44","type":"rpi-sensehatsim
+out","z":"5a72bee6.056458","name":"","x":861.4285714285713,"y":443.2857142857142,"wires":[]},{"id":"a9ec0c2d.3a4e38","type":"inject","z":"5a72bee6.056458","name":"Inject
+1","topic":"","payload":"1","payloadType":"str","repeat":"10","crontab":"","once":true,"x":61.5,"y":679,"wires":[["8efe88f1.d0c52"]]},{"id":"773d1bcd.8d9cdc","type":"wiotp-credentials","z":"5a72bee6.056458","name":"b827eb0e765e","org":"0bcj1t","devType":"gateway1","devId":"b827eb0e765e"}]
